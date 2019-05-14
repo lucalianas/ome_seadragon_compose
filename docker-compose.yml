@@ -3,7 +3,7 @@ version: '3'
 services:
 
   omero-db:
-    image: 'postgres:9.6.12-alpine'
+    image: postgres:9.6.12-alpine
     container_name: ome-pg-server
     networks:
       - ome_seadragon_env
@@ -12,30 +12,27 @@ services:
       - POSTGRES_USER=omero
       - POSTGRES_PASSWORD=omero
     volumes:
-      - 'ome-pg-data:/var/lib/postgresql/data'
+      - ome-pg-data:/var/lib/postgresql/data
 
   redis-server:
-    image: 'redis:5.0.4-alpine'
+    image: redis:5.0.4-alpine
     container_name: redis-server
-    command:
-      - redis-server
-      - '--appendonly'
-      - 'yes'
+    command: ["redis-server", "--appendonly", "yes"]
     networks:
       - ome_seadragon_env
     volumes:
-      - 'redis-data:/data'
+      - redis-data:/data
 
   omero-server:
-    image: 'openmicroscopy/omero-server:5.4.10'
+    image: openmicroscopy/omero-server:5.4.10
     container_name: omero-server
     depends_on:
       - omero-db
     networks:
       - ome_seadragon_env
     ports:
-      - '4063:4063'
-      - '4064:4064'
+      - "4063:4063"
+      - "4064:4064"
     environment:
       - ROOTPASS=omero
       - CONFIG_omero_db_host=ome-pg-server
@@ -43,11 +40,11 @@ services:
       - CONFIG_omero_db_pass=omero
       - CONFIG_omero_db_name=omero
     volumes:
-      - 'ome-data-dir:/OMERO'
-      - 'ome-server-var:/opt/omero/server/OMERO.server/var'
+      - ome-data-dir:/OMERO
+      - ome-server-var:/opt/omero/server/OMERO.server/var
 
   ome_seadragon-web:
-    image: 'crs4/ome_seadragon-web:0.6.13-ome5.4.10'
+    image: crs4/ome_seadragon-web:0.6.13-ome5.4.10
     container_name: ome_seadragon-web
     depends_on:
       - omero-server
@@ -66,10 +63,10 @@ services:
       - GW_USER_NAME=ome_gw
       - GW_USER_PASS=omero
     volumes:
-      - 'ome-data-dir:/OMERO'
+      - ome-data-dir:/OMERO
 
   ome_seadragon-nginx:
-    image: 'crs4/ome_seadragon-nginx:0.6.13-ome5.4.10-0'
+    image: crs4/ome_seadragon-nginx:0.6.13-ome5.4.10-0
     container_name: ome_seadragon-nginx
     depends_on:
       - ome_seadragon-web
@@ -83,7 +80,7 @@ services:
       - VIRTUAL_HOST=ome-seadragon.local
 
   ome_seadragon_gw-db:
-    image: 'postgres:9.6.12-alpine'
+    image: postgres:9.6.12-alpine
     container_name: ome_seadragon_gw-db
     networks:
       - ome_seadragon_env
@@ -92,10 +89,10 @@ services:
       - POSTGRES_USER=ome_seadragon
       - POSTGRES_PASSWORD=omero
     volumes:
-      - 'ome-seadragon-gw-pg-data:/var/lib/postgresql/data'
+      - ome-seadragon-gw-pg-data:/var/lib/postgresql/data
 
   ome_seadragon_gw-web:
-    image: 'crs4/ome_seadragon_gw-web:0.1.2'
+    image: crs4/ome_seadragon_gw-web:0.1.2
     container_name: ome_seadragon_gw-web
     depends_on:
       - ome_seadragon-nginx
@@ -112,10 +109,10 @@ services:
     environment:
       - DJANGO_CONFIG_FILE=/opt/django/conf/config.yaml
     volumes:
-      - './ome_seadragon_gw_config/:/opt/django/conf/'
+      - ./ome_seadragon_gw_config/:/opt/django/conf/
 
   ome_seadragon_gw-nginx:
-    image: 'crs4/ome_seadragon_gw-nginx:0.1.2-0'
+    image: crs4/ome_seadragon_gw-nginx:0.1.2-0
     container_name: ome_seadragon_gw-nginx
     depends_on:
       - ome_seadragon_gw-web
@@ -125,7 +122,7 @@ services:
     networks:
       - ome_seadragon_env
     environment:
-      - 'DJANGO_SERVER=ome_seadragon_gw-web:8080'
+      - DJANGO_SERVER=ome_seadragon_gw-web:8080
       - VIRTUAL_HOST=ome-seadragon-gw.local
 
   nginx-proxy:
@@ -134,9 +131,9 @@ services:
     networks:
       - ome_seadragon_env
     ports:
-      - '80:80'
+      - "80:80"
     volumes:
-      - '/var/run/docker.sock:/tmp/docker.sock:ro'
+      - /var/run/docker.sock:/tmp/docker.sock:ro
 
 volumes:
   ome-pg-data: null
