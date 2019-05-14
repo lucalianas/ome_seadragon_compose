@@ -1,0 +1,32 @@
+django:
+  debug: true
+  secret_key: _=yw7j2pt!zdfyj-1qlpmy*krje45vu)uyo$97c8n5m*rm)mr)
+  allowed_hosts:
+    - ome-seadragon-gw.local
+  session_cookie: ome_seadragon_gw_session
+  static_root: ./static/
+
+database:
+  engine: postgresql
+  name: ome_seadragon_gw
+  user: ome_seadragon
+  password: omero
+  host: ome_seadragon_gw-db
+  port: 5432
+
+omero:
+  cookie: session_id
+  user: ome_gw
+  password: omero
+  server_id: 1
+
+ome_seadragon:
+  base_url: http://ome-seadragon.local/ome_seadragon/
+  static_files_url: http://ome-seadragon.local/static/ome_seadragon/
+
+cache:
+  driver: redis
+  host: localhost
+  port: 6379
+  db: 0
+  expire_time: {minutes: 30}
