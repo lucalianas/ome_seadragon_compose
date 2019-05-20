@@ -122,7 +122,7 @@ services:
     networks:
       - ome_seadragon_env
     environment:
-      - DJANGO_SERVER=ome_seadragon_gw-web:8080
+      - DJANGO_SERVER=ome_seadragon_gw-web
       - VIRTUAL_HOST=ome-seadragon-gw.local
 
   nginx-proxy:
