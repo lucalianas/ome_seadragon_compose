@@ -66,7 +66,7 @@ services:
       - ome-data-dir:/OMERO
 
   ome_seadragon-nginx:
-    image: crs4/ome_seadragon-nginx:0.6.13-ome5.4.10-0
+    image: crs4/ome_seadragon-nginx:0.6.13-ome5.4.10
     container_name: ome_seadragon-nginx
     depends_on:
       - ome_seadragon-web
@@ -112,7 +112,7 @@ services:
       - ./ome_seadragon_gw_config/:/opt/django/conf/
 
   ome_seadragon_gw-nginx:
-    image: crs4/ome_seadragon_gw-nginx:0.1.2-0
+    image: crs4/ome_seadragon_gw-nginx:0.1.2
     container_name: ome_seadragon_gw-nginx
     depends_on:
       - ome_seadragon_gw-web
