@@ -117,7 +117,7 @@ services:
     depends_on:
       - ome_seadragon_gw-web
       - nginx-proxy
-    entrypoint: ['/usr/local/bin/wait-for-it.sh', 'ome_seadragon_gw-web:8080', '--',
+    entrypoint: ['/usr/local/bin/wait-for-it.sh', 'ome_seadragon_gw-web:8080', '--timeout=600', '--strict', '--',
                  '/usr/local/bin/entrypoint.sh']
     networks:
       - ome_seadragon_env
