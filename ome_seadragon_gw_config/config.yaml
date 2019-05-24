@@ -15,7 +15,7 @@ database:
   port: 5432
 
 omero:
-  cookie: session_id
+  cookie: ome_seadragon_web
   user: ome_gw
   password: omero
   server_id: 1
@@ -26,7 +26,7 @@ ome_seadragon:
 
 cache:
   driver: redis
-  host: localhost
+  host: redis-server
   port: 6379
   db: 0
   expire_time: {minutes: 30}
