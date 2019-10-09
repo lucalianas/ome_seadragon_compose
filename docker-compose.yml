@@ -17,7 +17,7 @@ services:
     restart: always
 
   redis-server:
-    image: redis:5.0.4-alpine
+    image: redis:5.0.5-alpine
     command: ["redis-server", "--appendonly", "yes"]
     networks:
       ome_seadragon_env:
@@ -50,7 +50,7 @@ services:
     restart: always
 
   ome_seadragon-web:
-    image: crs4/ome_seadragon-web:0.6.13-ome5.4.10
+    image: crs4/ome_seadragon-web:0.6.14-ome5.4.10
     depends_on:
       - omero-server
       - redis-server
@@ -74,7 +74,7 @@ services:
     restart: always
 
   ome_seadragon-nginx:
-    image: crs4/ome_seadragon-nginx:0.6.13-ome5.4.10
+    image: crs4/ome_seadragon-nginx:0.6.14-ome5.4.10
     depends_on:
       - ome_seadragon-web
       - nginx-proxy
