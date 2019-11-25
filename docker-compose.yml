@@ -26,7 +26,7 @@ services:
       - redis-data:/data
 
   omero-server:
-    image: openmicroscopy/omero-server:5.4.10
+    image: openmicroscopy/omero-server:5.5.1
     depends_on:
       - omero-db
     networks:
@@ -47,7 +47,7 @@ services:
       - ome-server-var:/opt/omero/server/OMERO.server/var
 
   ome_seadragon-web:
-    image: crs4/ome_seadragon-web:0.6.15-ome5.4.10
+    image: crs4/ome_seadragon-web:0.6.16-ome5.5.1
     depends_on:
       - omero-server
       - redis-server
@@ -70,7 +70,7 @@ services:
       - ome-data-dir:/OMERO
 
   ome_seadragon-nginx:
-    image: crs4/ome_seadragon-nginx:0.6.15-ome5.4.10
+    image: crs4/ome_seadragon-nginx:0.6.16-ome5.5.1
     depends_on:
       - ome_seadragon-web
       - nginx-proxy
@@ -99,7 +99,7 @@ services:
       - ome-seadragon-gw-pg-data:/var/lib/postgresql/data
 
   ome_seadragon_gw-web:
-    image: crs4/ome_seadragon_gw-web:0.1.2
+    image: crs4/ome_seadragon_gw-web:0.1.3
     depends_on:
       - ome_seadragon-nginx
       - redis-server
@@ -118,7 +118,7 @@ services:
       - ./ome_seadragon_gw_config/:/opt/django/conf/
 
   ome_seadragon_gw-nginx:
-    image: crs4/ome_seadragon_gw-nginx:0.1.2
+    image: crs4/ome_seadragon_gw-nginx:0.1.3
     depends_on:
       - ome_seadragon_gw-web
       - nginx-proxy
