@@ -26,7 +26,7 @@ services:
       - redis-data:/data
 
   omero-server:
-    image: openmicroscopy/omero-server:5.6.1
+    image: openmicroscopy/omero-server:5.6.2
     depends_on:
       - omero-db
     networks:
@@ -47,7 +47,7 @@ services:
       - ome-server-var:/opt/omero/server/OMERO.server/var
 
   ome_seadragon-web:
-    image: crs4/ome_seadragon-web:0.7.0-ome5.6.3
+    image: crs4/ome_seadragon-web:0.7.0-ome5.7.0
     depends_on:
       - omero-server
       - redis-server
@@ -70,7 +70,7 @@ services:
       - ome-data-dir:/OMERO
 
   ome_seadragon-nginx:
-    image: crs4/ome_seadragon-nginx:0.7.0-ome5.6.3
+    image: crs4/ome_seadragon-nginx:0.7.0-ome5.7.0
     depends_on:
       - ome_seadragon-web
       - nginx-proxy
