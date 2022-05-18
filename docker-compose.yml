@@ -26,7 +26,7 @@ services:
       - redis-data:/data
 
   omero-server:
-    image: openmicroscopy/omero-server:5.6.2
+    image: openmicroscopy/omero-server:5.6.3-4
     depends_on:
       - omero-db
     networks:
@@ -45,9 +45,10 @@ services:
     volumes:
       - ome-data-dir:/OMERO
       - ome-server-var:/opt/omero/server/OMERO.server/var
+      - mirax-images-dir:/data/mrxs_images
 
   ome_seadragon-web:
-    image: crs4/ome_seadragon-web:0.7.0-ome5.7.0
+    image: crs4/ome_seadragon-web:0.8.4-ome5.11
     depends_on:
       - omero-server
       - redis-server
@@ -66,11 +67,16 @@ services:
       - IMAGES_REPOSITORY=/OMERO/
       - GW_USER_NAME=ome_gw
       - GW_USER_PASS=omero
+      - DATASETS_REPOSITORY=/data/array_datasets
+      - MIRAX_FOLDER=/data/mrxs_images
+      - SLIDE_LIMIT_BOUNDS=False
     volumes:
       - ome-data-dir:/OMERO
+      - mirax-images-dir:/data/mrxs_images
+      - array-datasets-dir:/data/array_datasets
 
   ome_seadragon-nginx:
-    image: crs4/ome_seadragon-nginx:0.7.0-ome5.7.0
+    image: crs4/ome_seadragon-nginx:0.8.4-ome5.11
     depends_on:
       - ome_seadragon-web
       - nginx-proxy
@@ -149,6 +155,8 @@ volumes:
   ome-seadragon-gw-pg-data: null
   ome-server-var: null
   ome-data-dir: null
+  mirax-images-dir: null
+  array-datasets-dir: null
   redis-data: null
 
 networks:
